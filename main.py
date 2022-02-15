@@ -9,6 +9,8 @@ def main_menu():
             print(2)
         elif num_menu == "3":
             print(3)
+        elif num_menu == "4":
+            print(4)
         else:
             print("завершение")
             break
