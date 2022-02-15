@@ -2,7 +2,7 @@
 
 def main_menu():
     while True:
-        num_menu = input("введи номер")
+        num_menu = input("введи номер 1,2,3. 4 для выхода")
         if num_menu == "1":
             print(1)
         elif num_menu == "2":
@@ -10,10 +10,11 @@ def main_menu():
         elif num_menu == "3":
             print(3)
         elif num_menu == "4":
-            print(4)
-        else:
-            print("завершение")
+            print("выход")
             break
+        else:
+            print("неверное значение")
+
 
 
 
