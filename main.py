@@ -45,15 +45,22 @@ def main_menu():
 def ordering_food():
     print("\t\t Введите номер желаемого.")
     while True:
-        num_food = input('\
-            1) Аппетитные Бургеры\n\
-            2) Картошка фри\n\
-            3) Вкусное мороженое\n\
-            4) Освежающие напитки.\n\
-            5) Выйти из меню заказа.\n\
-                         ')
-        info_food = DataBase.read(f"SELECT name_food,PRICE FROM food")
-        print(info_food)
+
+        info_food = DataBase.read(f"SELECT * FROM food")
+        number_for_food_intable = 1
+        for food in info_food:
+            print(f"{number_for_food_intable}) {food[0]}. Цена: {food[2]}₽")
+            number_for_food_intable += 1
+
+
+        try:
+            num_food = str(input(""))
+        except:
+            num_food = 100
+
+        if int(num_food) >= 1 and int(num_food) <= 14:
+            count_food = input("Выберите количество этого товара")
+
 
 
         if num_food == "1":
