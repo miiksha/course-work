@@ -14,17 +14,18 @@ def main_menu():
                              "\tВведите 2 чтобы посмотреть на свой заказ.\n"
                              "\tВведите 3 чтобы оплатить свой заказ.\n")
         else:
-            num_menu = input("\t\tВыберите дальнейшие действия:\n"
+            num_menu = input("\n\t\tВыберите дальнейшие действия:\n"
                              "\tВведите 1 чтобы изменить заказ.\n"
                              "\tВведите 2 чтобы посмотреть на свой заказ.\n"
                              "\tВведите 3 чтобы оплатить свой заказ.\n")
 
         if num_menu == "1":
+            os.system('cls')
             start = False
-            print(1)
             ordering_food()
 
         elif num_menu == "2":
+            os.system('cls')
             start = False
             info_food = DataBase.read(f"SELECT * FROM food WHERE count_food > {0}")
             if info_food:
@@ -33,12 +34,13 @@ def main_menu():
                 for food in info_food:
                     print(f"{number_in_table}) {food[0]}.")
                     number_in_table += 1
-                    sum_price += int(food[2])
+                    sum_price += (int(food[2])*int(food[1]))
                 print(f"\nОбщая сумма заказа составляет: {sum_price}₽")
             else:
                 print(f"Ваша корзина пуста.")
 
         elif num_menu == "3":
+            os.system('cls')
             info_food = DataBase.read(f"SELECT * FROM food WHERE count_food > {0}")
             if info_food:
                 print("Обработка платежа")  # для оплаты пройдите на кассу + знак загрузки добавить
@@ -63,6 +65,7 @@ def main_menu():
 def ordering_food():
 
     while True:
+
         print("\n\t\t Введите номер желаемого.")
 
         info_food = DataBase.read(f"SELECT * FROM food")
@@ -79,7 +82,8 @@ def ordering_food():
 
         if int(num_food) >= 1 and int(num_food) <= 14:
             try:
-                count_food = int(input("Выберите количество этого товара"))
+                num_food = str(num_food)
+                count_food = int(input("Выберите количество этого товара: "))
                 if count_food > 10:
                     count_food = 0
                     print("Товар не добавлен в корзину. Введено слишком большое количество.")
@@ -88,7 +92,9 @@ def ordering_food():
 
 
         if num_food == "1":
+            os.system('cls')
             DataBase.update(count_food,"Острый бургер")
+            print("Острый бургер был добавлен в ваш заказ")
         elif num_food == "2":
             print(2)
         elif num_food == "3":
@@ -98,10 +104,10 @@ def ordering_food():
         elif num_food == "5":
             break
         else:
-            print("Введено неверное значение.")
+            print("Введено неверное значениепппп.")
 
 
-        close_order = str(input("Желаете продолжить выбор продуктов? (да/нет)"))
+        close_order = str(input("Желаете продолжить выбор продуктов? (да/нет) "))
         if close_order == "нет":
             break
 
@@ -133,8 +139,6 @@ class DataBase:
     def insert(name,count,price):
         conn = sqlite3.connect('food_base')
         sql = conn.cursor()
-        #user_data = DataBase.read(f"SELECT user_id FROM users WHERE user_id = '{message.from_user.id}'")
-        #if not user_data:
         sql.execute("INSERT INTO food VALUES (?, ?, ?)",
                         (name, count, price))
         conn.commit()
