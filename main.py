@@ -48,11 +48,13 @@ def ordering_food():
         num_food = input('\
             1) Аппетитные Бургеры\n\
             2) Картошка фри\n\
-            3) Жаренные наггетсы\n\
-            4) Вкусное мороженое\n\
-            5) Освежающие напитки.\n\
-            6) Выйти из меню заказа.\n\
+            3) Вкусное мороженое\n\
+            4) Освежающие напитки.\n\
+            5) Выйти из меню заказа.\n\
                          ')
+        info_food = DataBase.read(f"SELECT name_food,PRICE FROM food")
+        print(info_food)
+
 
         if num_food == "1":
             print(1)
@@ -63,8 +65,6 @@ def ordering_food():
         elif num_food == "4":
             print(4)
         elif num_food == "5":
-            print(5)
-        elif num_food == "6":
             break
         else:
             print("Введено неверное значение.")
@@ -111,5 +111,40 @@ class DataBase:
 
 
 if __name__ == '__main__':
-    #main_menu()
-    DataBase.create_table()
+    main_menu()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # DataBase.insert("Острый бургер",0,158)
+    # DataBase.insert("Бургер классический",0,148)
+    # DataBase.insert("Картошка фри",0,55)
+    # DataBase.insert("Картошка фри по-деревенски",0,70)
+    # DataBase.insert("Пломбир",0,40)
+    # DataBase.insert("Пломбир с ванилью",0,50)
+    # DataBase.insert("Пломбир с шоколадом",0,52)
+    # DataBase.insert("Пломбир со вкусом малины",0,55)
+    # DataBase.insert("Пепси 0,5л",0,79)
+    # DataBase.insert("Чай чёрный 0,3",0,49)
+    # DataBase.insert("Чай зелёный 0,3",0,49)
+    # DataBase.insert("Кофе 0,3",0,57)
+    # DataBase.insert("Кока-кола 0,5л",0,79)
+    # DataBase.insert("Спрайт 0,5л",0,79)
