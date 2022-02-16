@@ -23,18 +23,34 @@ def main_menu():
             start = False
             print(1)
             ordering_food()
+
         elif num_menu == "2":
             start = False
-            print(2)
+            info_food = DataBase.read(f"SELECT * FROM food WHERE count_food > {0}")
+            if info_food:
+                number_in_table = 1
+                sum_price = 0
+                for food in info_food:
+                    print(f"{number_in_table}) {food[0]}.")
+                    number_in_table += 1
+                    sum_price += int(food[2])
+                print(f"Общая сумма заказа составляет: {sum_price}₽")
+            else:
+                print(f"Ваша корзина пуста.")
         elif num_menu == "3":
-            print("Обработка платежа")  # для оплаты пройдите на кассу + знак загрузки добавить
-            time.sleep(2)
-            print("Обработка платежа. 50% выполнено.")
-            time.sleep(3)
-            print("Обработка платежа завершена, заказ начал готовиться. Ждём вас снова.")
-            start = True
-            time.sleep(4)
-            os.system('cls')
+            info_food = DataBase.read(f"SELECT * FROM food WHERE count_food > {0}")
+            if info_food:
+                print("Обработка платежа")  # для оплаты пройдите на кассу + знак загрузки добавить
+                time.sleep(2)
+                print("Обработка платежа. 50% выполнено.")
+                time.sleep(3)
+                print("Обработка платежа завершена, заказ начал готовиться. Ждём вас снова.")
+                start = True
+                time.sleep(4)
+                os.system('cls')
+            else:
+                print("Вам пока нечего оплачивать.")
+
         elif num_menu == "admin":
             print("смена закрыта")
             break
