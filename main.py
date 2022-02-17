@@ -3,7 +3,6 @@ import time
 import sqlite3
 
 
-
 def main_menu():
     start = True
     while True:
@@ -14,7 +13,6 @@ def main_menu():
                              "\tВведите 2 чтобы посмотреть на свой заказ.\n"
                              "\tВведите 3 чтобы оплатить свой заказ.\n")
         else:
-            os.system('cls')
             num_menu = input("\n\t\tВыберите дальнейшие действия:\n"
                              "\tВведите 1 чтобы изменить заказ.\n"
                              "\tВведите 2 чтобы посмотреть на свой заказ.\n"
@@ -32,9 +30,10 @@ def main_menu():
             if info_food:
                 number_in_table = 1
                 sum_price = 0
-                count_food = 0
                 for food in info_food:
-                    print(f"{number_in_table}) {food[0]} за {food[2]}₽ в количестве х{food[1]}. В сумме на: {int(food[2])*int(food[1])}")
+                    msg = f'{number_in_table}) {food[0]} за {food[2]}₽ в количестве х{food[1]}. '
+                    msg += f'В сумме на: {int(food[2])*int(food[1])}'
+                    print(msg)
                     number_in_table += 1
                     sum_price += (int(food[2])*int(food[1]))
                 print(f"\nОбщая сумма заказа составляет: {sum_price}₽")
@@ -80,18 +79,21 @@ def ordering_food():
 
         try:
             num_food = int(input(""))
-        except:
+        except Exception as error:
+            print(error)
             num_food = 100
 
-        if num_food >= 1 and num_food <= 14 and num_food != 0:
+        if 1 <= num_food <= 14 and num_food != 0:
             try:
                 num_food = str(num_food)
                 count_food = int(input("Выберите количество этого товара: "))
-                if count_food > 10:
+                if count_food >= 50:
                     count_food = 0
-                    print("Товар не добавлен в корзину. Введено слишком большое количество.")
+                    print("Товар не добавлен в корзину. Введено  большое количество.")
+
             except:
                 print("Введено неверное значение.")
+                break
 
 
         if num_food == "1":
