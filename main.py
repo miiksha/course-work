@@ -1,6 +1,7 @@
 import os
 import time
 import sqlite3
+from loguru import logger
 
 
 def main_menu():
@@ -42,11 +43,15 @@ def main_menu():
 
         elif num_menu == "3":
             os.system('cls')
+            sum_price = 0
             info_food = DataBase.read(f"SELECT * FROM food WHERE count_food > {0}")
             if info_food:
-                print("Обработка платежа")  # для оплаты пройдите на кассу + знак загрузки добавить
+                for food in info_food:
+                    sum_price += (int(food[2])*int(food[1]))
+                print(f"\nОбщая сумма заказа составляет: {sum_price}₽")
+                print("Идёт обработка платежа.")
                 time.sleep(2)
-                print("Обработка платежа. 50% выполнено.")
+                print("Обработка платежа: 50% выполнено.")
                 time.sleep(3)
                 DataBase.update(0, "*")
                 print("Обработка платежа завершена, заказ начал готовиться. Ждём вас снова.")
@@ -67,7 +72,7 @@ def main_menu():
 def ordering_food():
 
     while True:
-
+        count_food = 0
         print("\n\t\t Введите номер желаемого. Или 0 для возврата.")
 
         info_food = DataBase.read(f"SELECT * FROM food")
@@ -79,21 +84,24 @@ def ordering_food():
 
         try:
             num_food = int(input(""))
-        except Exception as error:
-            print(error)
-            num_food = 100
+        except Exception as err:
+            bug = f'-----------Ошибка----------{err}'
+            logger.opt(exception=True).error(bug)
+            num_food = 10000
 
-        if 1 <= num_food <= 14 and num_food != 0:
+        if 1 <= num_food <= 14:
             try:
                 num_food = str(num_food)
                 count_food = int(input("Выберите количество этого товара: "))
                 if count_food >= 50:
                     count_food = 0
-                    print("Товар не добавлен в корзину. Введено  большое количество.")
+                    num_food = 10000
 
-            except:
-                print("Введено неверное значение.")
-                break
+            except Exception as err:
+                bug = f'-----------Ошибка----------{err}'
+                logger.opt(exception=True).error(bug)
+                count_food = 0
+                num_food = 10000
 
 
         if num_food == "1":
@@ -155,7 +163,7 @@ def ordering_food():
         elif num_food == 0:
             break
         else:
-            print("Введено неверное значение.")
+            print("Товар не добавлен в корзину. Введено неверное значение.")
 
         if num_food != 0:
             close_order = str(input("Желаете продолжить выбор продуктов? (да/нет) "))
@@ -209,46 +217,8 @@ class DataBase:
         conn.close()
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 if __name__ == '__main__':
     main_menu()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     # DataBase.insert("Острый бургер",0,158)
