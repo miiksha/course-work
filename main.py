@@ -14,6 +14,7 @@ def main_menu():
                              "\tВведите 2 чтобы посмотреть на свой заказ.\n"
                              "\tВведите 3 чтобы оплатить свой заказ.\n")
         else:
+            os.system('cls')
             num_menu = input("\n\t\tВыберите дальнейшие действия:\n"
                              "\tВведите 1 чтобы изменить заказ.\n"
                              "\tВведите 2 чтобы посмотреть на свой заказ.\n"
@@ -31,8 +32,9 @@ def main_menu():
             if info_food:
                 number_in_table = 1
                 sum_price = 0
+                count_food = 0
                 for food in info_food:
-                    print(f"{number_in_table}) {food[0]}.")
+                    print(f"{number_in_table}) {food[0]} за {food[2]}₽ в количестве х{food[1]}. В сумме на: {int(food[2])*int(food[1])}")
                     number_in_table += 1
                     sum_price += (int(food[2])*int(food[1]))
                 print(f"\nОбщая сумма заказа составляет: {sum_price}₽")
@@ -47,7 +49,7 @@ def main_menu():
                 time.sleep(2)
                 print("Обработка платежа. 50% выполнено.")
                 time.sleep(3)
-                DataBase.update(0,"*")
+                DataBase.update(0, "*")
                 print("Обработка платежа завершена, заказ начал готовиться. Ждём вас снова.")
                 start = True
                 time.sleep(4)
@@ -56,6 +58,7 @@ def main_menu():
                 print("Вам пока нечего оплачивать.")
 
         elif num_menu == "admin":
+            DataBase.update(0, "*")
             print("смена закрыта")
             break
         else:
@@ -66,13 +69,13 @@ def ordering_food():
 
     while True:
 
-        print("\n\t\t Введите номер желаемого.")
+        print("\n\t\t Введите номер желаемого. Или 0 для возврата.")
 
         info_food = DataBase.read(f"SELECT * FROM food")
-        number_for_food_intable = 1
+        number_for_food_in_table = 1
         for food in info_food:
-            print(f"{number_for_food_intable}) {food[0]}. Цена: {food[2]}₽")
-            number_for_food_intable += 1
+            print(f"{number_for_food_in_table}) {food[0]}. Цена: {food[2]}₽")
+            number_for_food_in_table += 1
 
 
         try:
@@ -80,7 +83,7 @@ def ordering_food():
         except:
             num_food = 100
 
-        if int(num_food) >= 1 and int(num_food) <= 14:
+        if num_food >= 1 and num_food <= 14 and num_food != 0:
             try:
                 num_food = str(num_food)
                 count_food = int(input("Выберите количество этого товара: "))
@@ -93,23 +96,69 @@ def ordering_food():
 
         if num_food == "1":
             os.system('cls')
-            DataBase.update(count_food,"Острый бургер")
-            print("Острый бургер был добавлен в ваш заказ")
+            DataBase.update(count_food, "Острый бургер")
+            print("Острый бургер был добавлен в ваш заказ.")
         elif num_food == "2":
-            print(2)
+            os.system('cls')
+            DataBase.update(count_food, "Бургер классический")
+            print("Бургер классический был добавлен в ваш заказ.")
         elif num_food == "3":
-            print(3)
+            os.system('cls')
+            DataBase.update(count_food, "Картошка фри")
+            print("Картошка фри была добавлена в ваш заказ.")
         elif num_food == "4":
-            print(4)
+            os.system('cls')
+            DataBase.update(count_food, "Картошка фри по-деревенски")
+            print("Картошка фри по-деревенски была добавлена в ваш заказ.")
         elif num_food == "5":
+            os.system('cls')
+            DataBase.update(count_food, "Пломбир")
+            print("Пломбир был добавлен в ваш заказ.")
+        elif num_food == "6":
+            os.system('cls')
+            DataBase.update(count_food, "Пломбир с ванилью")
+            print("Пломбир с ванилью был добавлен в ваш заказ.")
+        elif num_food == "7":
+            os.system('cls')
+            DataBase.update(count_food, "Пломбир с шоколадом")
+            print("Пломбир с шоколадом был добавлен в ваш заказ.")
+        elif num_food == "8":
+            os.system('cls')
+            DataBase.update(count_food, "Пломбир со вкусом малины")
+            print("Пломбир со вкусом малины был добавлен в ваш заказ.")
+        elif num_food == "9":
+            os.system('cls')
+            DataBase.update(count_food, "Пепси 0,5л")
+            print("Пепси 0,5л была добавлена в ваш заказ.")
+        elif num_food == "10":
+            os.system('cls')
+            DataBase.update(count_food, "Чай чёрный 0,3")
+            print("Чай чёрный был добавлен в ваш заказ.")
+        elif num_food == "11":
+            os.system('cls')
+            DataBase.update(count_food, "Чай зелёный 0,3")
+            print("Чай зелёный 0,3 был добавлен в ваш заказ.")
+        elif num_food == "12":
+            os.system('cls')
+            DataBase.update(count_food, "Кофе 0,3")
+            print("Кофе 0,3 был добавлен в ваш заказ.")
+        elif num_food == "13":
+            os.system('cls')
+            DataBase.update(count_food, "Кока-кола 0,5л")
+            print("Кока-кола 0,5л была добавлена в ваш заказ.")
+        elif num_food == "14":
+            os.system('cls')
+            DataBase.update(count_food, "Спрайт 0,5л")
+            print("Спрайт 0,5л был добавлен в ваш заказ.")
+        elif num_food == 0:
             break
         else:
-            print("Введено неверное значениепппп.")
+            print("Введено неверное значение.")
 
-
-        close_order = str(input("Желаете продолжить выбор продуктов? (да/нет) "))
-        if close_order == "нет":
-            break
+        if num_food != 0:
+            close_order = str(input("Желаете продолжить выбор продуктов? (да/нет) "))
+            if close_order == "нет":
+                break
 
 
 class DataBase:
@@ -136,11 +185,11 @@ class DataBase:
         return result
 
     @staticmethod
-    def insert(name,count,price):
+    def insert(name, count, price):
         conn = sqlite3.connect('food_base')
         sql = conn.cursor()
         sql.execute("INSERT INTO food VALUES (?, ?, ?)",
-                        (name, count, price))
+                    (name, count, price))
         conn.commit()
         sql.close()
         conn.close()
